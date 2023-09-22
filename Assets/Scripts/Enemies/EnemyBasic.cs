@@ -7,6 +7,7 @@ public abstract class EnemyBasic : MonoBehaviour
     private int hp;
 
     public abstract void TurnOnPlayer();
+    public abstract bool PlayerIsVisible();
 
     private void Update()
     {

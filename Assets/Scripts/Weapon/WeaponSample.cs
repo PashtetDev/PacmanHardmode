@@ -9,5 +9,6 @@ public class WeaponSample : ScriptableObject
     public float currentReloadTime;
     public bool isAuto;
     public GameObject bullet;
-
+    public int count;
+    public float waitTime;
 }

@@ -17,3 +17,5 @@ MonoBehaviour:
   currentReloadTime: 0
   isAuto: 0
   bullet: {fileID: 6057861698261505712, guid: c858b7e38a98e9e47aaf4df699bd7be8, type: 3}
+  count: 1
+  waitTime: 0.05

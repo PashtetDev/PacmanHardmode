@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -8,12 +9,18 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     private GameObject bullet;
 
-    private void Shot()
+    private IEnumerator Shot()
     {
+        Vector3 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float rotateAngle = transform.parent.localEulerAngles.z;
         myWeapon.currentReloadTime = myWeapon.reloadTime;
         StartCoroutine(Reload());
-        GameObject newBullet = Instantiate(myWeapon.bullet, transform.position, Quaternion.Euler(0, 0, transform.parent.localEulerAngles.z));
-        newBullet.GetComponent<Bullet>().Initialize(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
+        for (int i = 0; i < myWeapon.count; i++)
+        {
+            GameObject newBullet = Instantiate(myWeapon.bullet, transform.position, Quaternion.Euler(0, 0, rotateAngle));
+            newBullet.GetComponent<Bullet>().Initialize(direction - transform.position);
+            yield return new WaitForSeconds(myWeapon.waitTime);
+        }
     }
 
     private void Update()
@@ -23,11 +30,11 @@ public class Weapon : MonoBehaviour
             if (myWeapon.isAuto)
             {
                 if (Input.GetMouseButton(0))
-                    Shot();
+                    StartCoroutine(Shot());
             }
             else
             if (Input.GetMouseButtonDown(0))
-                Shot();
+                StartCoroutine(Shot());
         }
     }
 
