@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class EnemyBasic : MonoBehaviour
 {
-    public GameObject hand;
+    public GameObject weaponHand;
     [SerializeField]
     private int hp;
 
@@ -14,8 +14,9 @@ public abstract class EnemyBasic : MonoBehaviour
         TurnOnPlayer();
     }
 
-    private void Death()
+    public void Death()
     {
+        MapGenerator.instance.DeleteEnemy(gameObject);
         Destroy(gameObject);
     }
 

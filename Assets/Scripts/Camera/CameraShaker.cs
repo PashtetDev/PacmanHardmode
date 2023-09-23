@@ -5,12 +5,7 @@ public class CameraShaker : MonoBehaviour
 {
     public static CameraShaker instance;
 
-    private void Start()
-    {
-        Initialization();
-    }
-
-    private void Initialization()
+    public void Initialize()
     {
         if (instance == null)
             instance = this;
