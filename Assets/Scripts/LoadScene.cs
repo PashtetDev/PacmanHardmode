@@ -26,13 +26,13 @@ public class LoadScene : MonoBehaviour
     {
         if (upgrade || boss)
         {
-            if (upgrade)
-            {
-                SceneManager.LoadScene("Upgrade");
-            }
             if (boss)
             {
                 SceneManager.LoadScene("Boss");
+            }
+            else
+            {
+                SceneManager.LoadScene("Upgrade");
             }
         }
         else

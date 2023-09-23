@@ -20,6 +20,12 @@ public class Boosts
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
+    private GameObject cursorTexture;
+    [SerializeField]
+    private GameObject losePanel, backGround;
+    [SerializeField]
+    private PointCounter counter;
+    [SerializeField]
     private GameObject hand;
     [SerializeField]
     private CameraShaker cameraShaker;
@@ -27,26 +33,28 @@ public class PlayerController : MonoBehaviour
     private GameObject sprite;
     public static PlayerController instance;
     private Vector2 direction;
-    [SerializeField]
-    private float speed;
+    public float speed;
     private Rigidbody2D rb;
     public bool isLose;
     public Boosts myBoosts;
 
     public void Initialize()
     {
+        backGround.SetActive(false);
+        losePanel.SetActive(false);
         myBoosts = new Boosts();
-        myBoosts.gunBullet = 5;
+        myBoosts.gunBullet = 100;
         isLose = false;
         SetInstance();
         rb = GetComponent<Rigidbody2D>();
         cameraShaker.transform.parent = transform;
         cameraShaker.Initialize();
+        counter.Initialize();
+        BulletCheck();
     }
 
     public void BulletCheck()
     {
-        Debug.Log(myBoosts.gunBullet);
         if (myBoosts.gunBullet == 0)
         {
             hand.transform.GetChild(0).GetComponent<Weapon>().HideWeapon();
@@ -60,11 +68,13 @@ public class PlayerController : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Upgrade")
         {
+            cursorTexture.SetActive(false);
             cameraShaker.transform.GetChild(0).gameObject.SetActive(false);
             transform.position = new Vector3(0, 0, -18);
         }
         else
         {
+            cursorTexture.SetActive(true);
             transform.position = new Vector3(0, 0, 0);
             cameraShaker.transform.GetChild(0).gameObject.SetActive(true);
             BulletCheck();
@@ -146,9 +156,10 @@ public class PlayerController : MonoBehaviour
 
     public void Death()
     {
+        backGround.SetActive(true);
+        losePanel.SetActive(true);
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         isLose = true;
-        Debug.Log("Game over!");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -157,6 +168,7 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             myBoosts.points++;
+            PointCounter.instance.UpdateText(myBoosts.points);
             myBoosts.powerUp++;
         }
         if (collision.CompareTag("BigPoint"))
@@ -174,7 +186,26 @@ public class PlayerController : MonoBehaviour
             LoadScene.instance.LoadUpgrade();
             Destroy(collision.gameObject);
         }
-        if (collision.CompareTag("Fire"))
+        if (collision.CompareTag("Fire") )
+        {
+            Death();
+        }
+        if (collision.CompareTag("Pipe"))
+        {
+            LoadScene.instance.LoadBoss();
+            LoadScene.instance.Load();
+        }
+        if (collision.CompareTag("Gun"))
+        {
+            myBoosts.gunBullet += 5;
+            Destroy(collision.gameObject);
+            BulletCheck();
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Boss"))
         {
             Death();
         }

@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 958606259}
   - component: {fileID: 958606258}
   - component: {fileID: 958606260}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cursor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,6 +265,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46d339a7b91f4a14c82f6c07c56927c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bird: {fileID: 2031780103393231794, guid: ec9473e51831f964b969dec0b7c9a963, type: 3}
+  enemyBullet: {fileID: 4701176252946312570, guid: cd08d4893ecbcf84483cf0a8cd338b79, type: 3}
   bonfire: {fileID: 846342329236026754, guid: 48e0638a4d774f64cbefc49079f8737d, type: 3}
   pipe: {fileID: 6553378901669025134, guid: d5cf0672e7d7af747941662c4f30c45a, type: 3}
   portal: {fileID: 3597528035370109171, guid: 7363672b9a051ed42b44ea035f3480b6, type: 3}

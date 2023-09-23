@@ -12,6 +12,9 @@ TagManager:
   - Portal
   - Fire
   - Pipe
+  - Gun
+  - Boss
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -20,7 +23,7 @@ TagManager:
   - Water
   - UI
   - Map
-  - 
+  - Cursor
   - 
   - 
   - 

@@ -18,7 +18,6 @@ public class Weapon : MonoBehaviour
 
     private void Shot()
     {
-        Debug.Log("Gang");
         Vector3 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float rotateAngle = transform.parent.localEulerAngles.z;
         myWeapon.currentReloadTime = myWeapon.reloadTime;

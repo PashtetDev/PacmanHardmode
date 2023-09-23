@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject bird;
+    [SerializeField]
+    private GameObject enemyBullet;
+
     [SerializeField]
     private GameObject bonfire;
     [SerializeField]
@@ -29,26 +35,65 @@ public class MapGenerator : MonoBehaviour
     private List<Vector2Int> walls;
     private List<GameObject> enemies;
     private List<Vector2Int> subjects;
+    [SerializeField]
+    private bool isBoss;
 
     public void Awake()
     {
         subjects = new List<Vector2Int>();
         instance = this;
-        FloorGenerate();
-        EnemyFiller();
+        if (isBoss)
+        {
+            RoomCreator();
+        }
+        else
+        {
+            FloorGenerate();
+            EnemyFiller();
+        }
         WallFiller();
         objecManager = new GameObject("ObjectManager");
         objecManager.transform.parent = transform;
 
-        if (PlayerController.instance.myBoosts.isFire > 0)
-            BonfireFiller();
 
-        BigPointFiller();
-        PickUp();
-        PointFiller();
+        if (!isBoss)
+        {
+            if (PlayerController.instance.myBoosts.isFire > 0)
+                BonfireFiller();
+            BigPointFiller();
+            PickUp();
+            PointFiller();
+        }
         CreateRoom(10, Vector2Int.zero);
         MapDrawer();
         gameObject.name = "Map";
+        StartCoroutine(Wait());
+    }
+
+    private void RoomCreator()
+    {
+        map = new List<Vector2Int>
+        {
+            Vector2Int.zero
+        };
+        Vector2Int offset = new Vector2Int(-20, 0);
+        for (int i = 0; i < 25; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                map.Add(offset + new Vector2Int(i, j));
+            }
+        }
+        PlayerCreate();
+    }
+
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2);
+        if (PlayerController.instance.myBoosts.bird != 0)
+            StartCoroutine(SpawnerBird());
+        if (PlayerController.instance.myBoosts.enemyBullet != 0)
+            StartCoroutine(SpawnerBullet());
     }
 
     private void PointFiller()
@@ -77,6 +122,40 @@ public class MapGenerator : MonoBehaviour
                 subjects.Add(position);
                 Instantiate(bonfire, (Vector2)position, Quaternion.identity);
             }
+        }
+    }
+
+    private GameObject PlayerCreate()
+    {
+        if (isBoss)
+        {
+            GameObject myPlayer = null;
+            Vector2Int currentPosition = new Vector2Int(-15, 2);
+            if (PlayerController.instance == null)
+            {
+                myPlayer = Instantiate(player, (Vector2)currentPosition, Quaternion.identity);
+                myPlayer.GetComponent<PlayerController>().Initialize();
+            }
+            else
+            {
+                myPlayer = PlayerController.instance.gameObject;
+            }
+            return myPlayer;
+        }
+        else
+        {
+            GameObject myPlayer = null;
+            Vector2Int currentPosition = RandomCell();
+            if (PlayerController.instance == null)
+            {
+                myPlayer = Instantiate(player, (Vector2)currentPosition, Quaternion.identity);
+                myPlayer.GetComponent<PlayerController>().Initialize();
+            }
+            else
+            {
+                myPlayer = PlayerController.instance.gameObject;
+            }
+            return myPlayer;
         }
     }
 
@@ -161,17 +240,7 @@ public class MapGenerator : MonoBehaviour
                 CreateRoom(Random.Range(3, 9), map[Random.Range(0, map.Count - 1)]);
         }
 
-        GameObject myPlayer = null;
-        Vector2Int currentPosition = RandomCell();
-        if (PlayerController.instance == null)
-        {
-            myPlayer = Instantiate(player, (Vector2)currentPosition, Quaternion.identity);
-            myPlayer.GetComponent<PlayerController>().Initialize();
-        }
-        else
-        {
-            myPlayer = PlayerController.instance.gameObject;
-        }
+        GameObject myPlayer = PlayerCreate();
 
         int count = 0;
         while (count != 5)
@@ -193,7 +262,7 @@ public class MapGenerator : MonoBehaviour
         wallManager.transform.parent = transform;
         for (int i = 0; i < walls.Count; i++)
             Instantiate(wallPrefab, new Vector2(walls[i].x, walls[i].y), Quaternion.identity).transform.parent = wallManager.transform;
-}
+    }
 
     public void InitBandit()
     {
@@ -272,4 +341,29 @@ public class MapGenerator : MonoBehaviour
             Instantiate(pipe, position, Quaternion.identity);
 
     }
+
+    private IEnumerator SpawnerBullet()
+    {
+        while (!PlayerController.instance.isLose)
+        {
+            if (Random.Range(0, 2) == 0)
+                Instantiate(enemyBullet, PlayerController.instance.transform.position + new Vector3(Random.Range(13, 15), Random.Range(-8, 8), 0), Quaternion.identity);
+            else
+                Instantiate(enemyBullet, PlayerController.instance.transform.position + new Vector3(Random.Range(-13, -15), Random.Range(-8, 8), 0), Quaternion.identity);
+
+            yield return new WaitForSeconds(2 / Mathf.Log(PlayerController.instance.myBoosts.enemyBullet + 1));
+        }
+    }
+    private IEnumerator SpawnerBird()
+    {
+        while (!PlayerController.instance.isLose)
+        {
+            if (Random.Range(0, 2) == 0)
+                Instantiate(bird, PlayerController.instance.transform.position + new Vector3(Random.Range(13, 15), Random.Range(-8, 8), 0), Quaternion.identity);
+            else
+                Instantiate(bird, PlayerController.instance.transform.position + new Vector3(Random.Range(-13, -15), Random.Range(-8, 8), 0), Quaternion.identity);
+            yield return new WaitForSeconds(2 / Mathf.Log(PlayerController.instance.myBoosts.bird + 1));
+        }
+    }
+
 }

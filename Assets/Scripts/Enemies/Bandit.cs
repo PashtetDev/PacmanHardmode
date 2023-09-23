@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Bandit : EnemyBasic
 {
+    private EnemyWeapon weapon;
     [SerializeField]
     private GameObject eyas;
     [SerializeField]
@@ -26,6 +27,7 @@ public class Bandit : EnemyBasic
 
     public void Initialize()
     {
+        weapon = weaponHand.transform.GetChild(0).GetComponent<EnemyWeapon>();
         startSprite = mySprite.sprite;
         StartCoroutine(Wait());
     }
@@ -42,7 +44,8 @@ public class Bandit : EnemyBasic
     {
         if (PlayerController.instance.myBoosts.eating)
         {
-            weaponHand.SetActive(false);
+            if (!weapon.active)
+                weaponHand.SetActive(false);
         }
         else
         {
@@ -64,7 +67,8 @@ public class Bandit : EnemyBasic
             }
             else
             {
-                weaponHand.SetActive(false);
+                if (!weapon.active)
+                    weaponHand.SetActive(false);
             }
         }
     }
@@ -102,10 +106,11 @@ public class Bandit : EnemyBasic
     {
         if (playerFollower)
         {
-            if (Vector2.Distance(transform.position, PlayerController.instance.transform.position) > 0.5f)
+            if (Vector2.Distance(transform.position, PlayerController.instance.transform.position) > 5f)
             {
                 rb.velocity = (PlayerController.instance.transform.position - transform.position).normalized * speed;
             }
+            weapon.Shot();
         }
         else
             rb.velocity = Vector2.zero;

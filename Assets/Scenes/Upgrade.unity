@@ -788,11 +788,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5288255972552012260, guid: 956989040e646be4285746c2b5a0b806, type: 3}
   m_PrefabInstance: {fileID: 694011479}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &694011481 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5288255972552012259, guid: 956989040e646be4285746c2b5a0b806, type: 3}
-  m_PrefabInstance: {fileID: 694011479}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &791310417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1149,7 +1144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db2a98041f59c024d80863d73fc54ec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  marshroom: {fileID: 694011481}
   centerPosition: {fileID: 917613663}
   morePickUps:
   - {fileID: 1905905978938399265, guid: 80a77245b176e2045b8eb5423c598ecb, type: 3}
@@ -1578,7 +1572,7 @@ GameObject:
   - component: {fileID: 2029415750}
   - component: {fileID: 2029415751}
   m_Layer: 5
-  m_Name: Header
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

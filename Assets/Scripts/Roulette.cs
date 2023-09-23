@@ -1,15 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Roulette : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject marshroom;
     [SerializeField]
     private Transform centerPosition;
     [SerializeField]
@@ -72,7 +67,6 @@ public class Roulette : MonoBehaviour
                 if (Mathf.Abs(winner.transform.position.x) > Mathf.Abs(pool[i].transform.position.x))
                     winner = pool[i];
         }
-        Debug.Log(winner.name);
         float alpha = 1;
         Vector3 startScale = winner.transform.localScale;
         while (alpha < 1.5f)
@@ -93,26 +87,30 @@ public class Roulette : MonoBehaviour
                 PlayerController.instance.myBoosts.boss = true;
                 break;
             case PickUp.Type.mashroom:
-                Instantiate(marshroom);
+                PlayerController.instance.speed = 7f;
                 PlayerController.instance.myBoosts.mashroom = true;
                 break;
             case PickUp.Type.bird:
-                PlayerController.instance.myBoosts.bird += 1;
+                PlayerController.instance.myBoosts.bird += 10;
                 break;
             case PickUp.Type.coin:
                 PlayerController.instance.myBoosts.points += 100;
                 break;
             case PickUp.Type.bullet:
-                PlayerController.instance.myBoosts.enemyBullet += 1;
+                PlayerController.instance.myBoosts.enemyBullet += 10;
                 break;
             case PickUp.Type.gameboy:
-                play = false;
                 Initialize();
+                button.SetActive(true);
+                play = false;
+                StopAllCoroutines();
                 break;
         }
         yield return new WaitForSeconds(1f);
-        if (!play)
+        if (play)
+        {
             SceneManager.LoadScene("Game");
+        }
     }
 
     private void Update()
