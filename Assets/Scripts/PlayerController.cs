@@ -1,14 +1,19 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Boosts
 {
-    public bool gun;
-    public bool isFire;
+    public int powerUp;
+    public int isFire;
     public int level;
     public int points;
     public bool eating;
-    public int bulletCount;
+    public int gunBullet;
+    public int bird;
+    public bool boss;
+    public bool mashroom;
+    public int enemyBullet;
 }
 
 
@@ -31,7 +36,7 @@ public class PlayerController : MonoBehaviour
     public void Initialize()
     {
         myBoosts = new Boosts();
-        myBoosts.bulletCount = 5;
+        myBoosts.gunBullet = 5;
         isLose = false;
         SetInstance();
         rb = GetComponent<Rigidbody2D>();
@@ -39,12 +44,31 @@ public class PlayerController : MonoBehaviour
         cameraShaker.Initialize();
     }
 
-    private void OnLevelWasLoaded(int level)
+    public void BulletCheck()
     {
-        if (!myBoosts.gun)
+        Debug.Log(myBoosts.gunBullet);
+        if (myBoosts.gunBullet == 0)
+        {
+            hand.transform.GetChild(0).GetComponent<Weapon>().HideWeapon();
             hand.SetActive(false);
+        }
         else
             hand.SetActive(true);
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        if (SceneManager.GetActiveScene().name == "Upgrade")
+        {
+            cameraShaker.transform.GetChild(0).gameObject.SetActive(false);
+            transform.position = new Vector3(0, 0, -18);
+        }
+        else
+        {
+            transform.position = new Vector3(0, 0, 0);
+            cameraShaker.transform.GetChild(0).gameObject.SetActive(true);
+            BulletCheck();
+        }
     }
 
     private void SetInstance()
@@ -58,6 +82,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (myBoosts.powerUp >= 100)
+        {
+            myBoosts.powerUp = 0;
+            StopAllCoroutines();
+            StartCoroutine(Eating());
+        }
         if (!isLose)
         {
             direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
@@ -127,9 +157,11 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             myBoosts.points++;
+            myBoosts.powerUp++;
         }
         if (collision.CompareTag("BigPoint"))
         {
+            StopAllCoroutines();
             Destroy(collision.gameObject);
             StartCoroutine(Eating());
         }
@@ -142,7 +174,7 @@ public class PlayerController : MonoBehaviour
             LoadScene.instance.LoadUpgrade();
             Destroy(collision.gameObject);
         }
-        if (collision.CompareTag("1up"))
+        if (collision.CompareTag("Fire"))
         {
             Death();
         }

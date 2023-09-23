@@ -113,7 +113,6 @@ public class Bandit : EnemyBasic
 
     private void FreeWalk()
     {
-        Debug.Log("Walk");
         Vector2 targetPosition = MapGenerator.instance.RandomCell();
         List<RaycastHit2D> hits = Physics2D.RaycastAll(transform.position, targetPosition).ToList();
 

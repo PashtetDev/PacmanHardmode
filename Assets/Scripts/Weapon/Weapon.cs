@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Weapon : MonoBehaviour
 {
@@ -10,20 +11,30 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     private GameObject bullet;
 
-    private IEnumerator Shot()
+    private void Awake()
     {
+        myWeapon.currentReloadTime = 0;
+    }
+
+    private void Shot()
+    {
+        Debug.Log("Gang");
         Vector3 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float rotateAngle = transform.parent.localEulerAngles.z;
         myWeapon.currentReloadTime = myWeapon.reloadTime;
         StartCoroutine(Reload());
-        for (int i = 0; i < myWeapon.count; i++)
-        {
-            StartCoroutine(CameraShaker.instance.Shake(0.1f, 0.5f));
-            StartCoroutine(Output(1f));
-            GameObject newBullet = Instantiate(myWeapon.bullet, dulo.position, Quaternion.Euler(0, 0, rotateAngle));
-            newBullet.GetComponent<Bullet>().Initialize(direction - dulo.position);
-            yield return new WaitForSeconds(myWeapon.waitTime);
-        }
+        StartCoroutine(CameraShaker.instance.Shake(0.1f, 0.5f));
+        StartCoroutine(Output(1f));
+        GameObject newBullet = Instantiate(myWeapon.bullet, dulo.position, Quaternion.Euler(0, 0, rotateAngle));
+        newBullet.GetComponent<Bullet>().Initialize(direction - dulo.position);
+        
+        PlayerController.instance.myBoosts.gunBullet--;
+        PlayerController.instance.BulletCheck();
+    }
+
+    public void HideWeapon()
+    {
+        StopAllCoroutines();
     }
 
     private IEnumerator Output(float magnitude)
@@ -42,16 +53,16 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
-        if (myWeapon.currentReloadTime == 0)
+        if (myWeapon.currentReloadTime == 0 && SceneManager.GetActiveScene().name != "Upgrade")
         {
             if (myWeapon.isAuto)
             {
-                if (Input.GetMouseButton(0) && PlayerController.instance.myBoosts.bulletCount != 0 && !PlayerController.instance.isLose)
-                    StartCoroutine(Shot());
+                if (Input.GetMouseButton(0) && PlayerController.instance.myBoosts.gunBullet > 0 && !PlayerController.instance.isLose)
+                    Shot();
             }
             else
-            if (Input.GetMouseButtonDown(0) && PlayerController.instance.myBoosts.bulletCount != 0 && !PlayerController.instance.isLose)
-                StartCoroutine(Shot());
+            if (Input.GetMouseButtonDown(0) && PlayerController.instance.myBoosts.gunBullet > 0 && !PlayerController.instance.isLose)
+                Shot();
         }
     }
 

@@ -7,6 +7,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField]
     private GameObject bonfire;
     [SerializeField]
+    private GameObject pipe;
+    [SerializeField]
     private GameObject portal;
     [SerializeField]
     private GameObject player;
@@ -38,12 +40,13 @@ public class MapGenerator : MonoBehaviour
         objecManager = new GameObject("ObjectManager");
         objecManager.transform.parent = transform;
 
-        if (PlayerController.instance.myBoosts.isFire)
+        if (PlayerController.instance.myBoosts.isFire > 0)
             BonfireFiller();
 
         BigPointFiller();
         PickUp();
         PointFiller();
+        CreateRoom(10, Vector2Int.zero);
         MapDrawer();
         gameObject.name = "Map";
     }
@@ -63,7 +66,7 @@ public class MapGenerator : MonoBehaviour
     private void BonfireFiller()
     {
         int count = 0;
-        int maxCount = (PlayerController.instance.myBoosts.level + 1) * 10;
+        int maxCount = PlayerController.instance.myBoosts.isFire * 10;
         Debug.Log(maxCount);
         while (count < maxCount)
         {
@@ -121,7 +124,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         for (int i = 0; i < subjects.Count; i++)
-            CreateRoom(Random.Range(3, 6), subjects[i]);
+            CreateRoom(Random.Range(10, 15), subjects[i]);
 
         InitBandit();
     }
@@ -263,6 +266,10 @@ public class MapGenerator : MonoBehaviour
     private IEnumerator Wait(Vector2 position)
     {
         yield return new WaitForSeconds(1);
-        Instantiate(portal, position, Quaternion.identity);
+        if (!PlayerController.instance.myBoosts.boss)
+            Instantiate(portal, position, Quaternion.identity);
+        else
+            Instantiate(pipe, position, Quaternion.identity);
+
     }
 }

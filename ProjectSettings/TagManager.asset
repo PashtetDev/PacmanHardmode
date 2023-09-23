@@ -11,6 +11,7 @@ TagManager:
   - GameBoy
   - Portal
   - Fire
+  - Pipe
   layers:
   - Default
   - TransparentFX

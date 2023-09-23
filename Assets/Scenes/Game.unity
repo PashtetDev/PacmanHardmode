@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonfire: {fileID: 846342329236026754, guid: 48e0638a4d774f64cbefc49079f8737d, type: 3}
+  pipe: {fileID: 6553378901669025134, guid: d5cf0672e7d7af747941662c4f30c45a, type: 3}
   portal: {fileID: 3597528035370109171, guid: 7363672b9a051ed42b44ea035f3480b6, type: 3}
   player: {fileID: 8941167335787179201, guid: e176dd2e7113af44eb3140d849bc9b80, type: 3}
   point: {fileID: 3604553554880083999, guid: cc39c059fb126a94890d276b5305389a, type: 3}
@@ -279,7 +280,7 @@ MonoBehaviour:
   - {fileID: 6751303969089193088, guid: 9a4b78c3356bf744681a9ca18bf9292a, type: 3}
   - {fileID: 6751303969089193088, guid: a9f9ceabf1fc76a4780bae9145d9d78c, type: 3}
   - {fileID: 6751303969089193088, guid: 31e16674a0a832f4d883de2d280d3e5e, type: 3}
-  size: 1000
+  size: 500
   enemy:
   - {fileID: 193761398731861094, guid: 9589069002371fe49879ac36ed6a24a3, type: 3}
   - {fileID: 193761398731861094, guid: b45250cc6a29166469d59c2118f1cf43, type: 3}
