@@ -154,8 +154,15 @@ public class PlayerController : MonoBehaviour
         myBoosts.eating = false;
     }
 
+    public void AddPoints()
+    {
+        myBoosts.points += 25;
+    }
+
     public void Death()
     {
+        if (PlayerPrefs.GetInt("TheBest") < myBoosts.points)
+            PlayerPrefs.SetInt("TheBest", myBoosts.points);
         backGround.SetActive(true);
         losePanel.SetActive(true);
         rb.constraints = RigidbodyConstraints2D.FreezeAll;

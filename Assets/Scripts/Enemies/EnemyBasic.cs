@@ -16,6 +16,7 @@ public abstract class EnemyBasic : MonoBehaviour
 
     public void Death()
     {
+        PlayerController.instance.AddPoints();
         MapGenerator.instance.DeleteEnemy(gameObject);
         Destroy(gameObject);
     }

@@ -4,6 +4,8 @@ using UnityEngine;
 public class Boss : MonoBehaviour
 {
     [SerializeField]
+    private GameObject eay1, eay2;
+    [SerializeField]
     private GameObject gun;
     [SerializeField]
     private GameObject[] bullet;
@@ -40,11 +42,21 @@ public class Boss : MonoBehaviour
         }
     }
 
+    private void Death()
+    {
+        isLose = true;
+        PlayerController.instance.AddPoints();
+        PlayerController.instance.AddPoints();
+        PlayerController.instance.AddPoints();
+        PlayerController.instance.AddPoints();
+        StartCoroutine();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.CompareTag("Bullet"))
         {
-            isLose = true;
+            Death();
         }
     }
 }
