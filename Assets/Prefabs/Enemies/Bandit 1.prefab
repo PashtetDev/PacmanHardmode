@@ -69,9 +69,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c7ca14a3a175984795c5e4934ef31f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particle: {fileID: 3253164889950565417, guid: 0fb5ea79661330c49a29db44c119e787, type: 3}
   weaponHand: {fileID: 3032518168502538469}
   hp: 10
-  weapon: {fileID: 0}
   eyas: {fileID: 817891582627676188}
   mySprite: {fileID: 193761398792536402}
   ghost: {fileID: 506310609, guid: 431f3888b77f4b54bba967065d94d679, type: 3}

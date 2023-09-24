@@ -81,7 +81,7 @@ public class Roulette : MonoBehaviour
         switch (winner.GetComponent<PickUp>().myType)
         {
             case PickUp.Type.fire:
-                PlayerController.instance.myBoosts.isFire += 1;
+                PlayerController.instance.myBoosts.isFire += 3;
                 break;
             case PickUp.Type.gun:
                 PlayerController.instance.myBoosts.gunBullet += 10;
@@ -94,13 +94,13 @@ public class Roulette : MonoBehaviour
                 PlayerController.instance.myBoosts.mashroom = true;
                 break;
             case PickUp.Type.bird:
-                PlayerController.instance.myBoosts.bird += 10;
+                PlayerController.instance.myBoosts.bird += 20;
                 break;
             case PickUp.Type.coin:
                 PlayerController.instance.myBoosts.points += 100;
                 break;
             case PickUp.Type.bullet:
-                PlayerController.instance.myBoosts.enemyBullet += 10;
+                PlayerController.instance.myBoosts.enemyBullet += 20;
                 break;
             case PickUp.Type.gameboy:
                 button.SetActive(true);

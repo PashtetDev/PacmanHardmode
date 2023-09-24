@@ -20,6 +20,8 @@ public class Boosts
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
+    private GameObject particle;
+    [SerializeField]
     private TabletControler tablet;
     [SerializeField]
     private GameObject eatingSound, bigPoint, gameBoySound, loseSound, backGroundMusic;
@@ -176,6 +178,9 @@ public class PlayerController : MonoBehaviour
     {
         if (!isLose)
         {
+            hand.SetActive(false);
+            Instantiate(particle, transform.position, Quaternion.identity).GetComponent<ParticleController>().Initialize();
+            Destroy(sprite);
             isLose = true;
             Instantiate(loseSound).GetComponent<Sound>().Initialize();
             if (PlayerPrefs.GetInt("TheBest") < myBoosts.points)
@@ -224,7 +229,7 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.CompareTag("Gun"))
         {
-            myBoosts.gunBullet += 5;
+            myBoosts.gunBullet += 3;
             Destroy(collision.gameObject);
             BulletCheck();
         }

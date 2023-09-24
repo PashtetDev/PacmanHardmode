@@ -69,9 +69,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c7ca14a3a175984795c5e4934ef31f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particle: {fileID: 3253164889950565417, guid: e19d3a5a2f89e59469a0e651eb0b3f61, type: 3}
   weaponHand: {fileID: 2672237434780062531}
   hp: 10
-  weapon: {fileID: 8220002320350444584}
   eyas: {fileID: 817891582627676188}
   mySprite: {fileID: 193761398792536402}
   ghost: {fileID: 506310609, guid: 431f3888b77f4b54bba967065d94d679, type: 3}
@@ -362,14 +362,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4958447892037535608, guid: 3114ae723292c7c418f37776fcabc684, type: 3}
   m_PrefabInstance: {fileID: 3134445576470411009}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8220002320350444584 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6443693572596157225, guid: 3114ae723292c7c418f37776fcabc684, type: 3}
-  m_PrefabInstance: {fileID: 3134445576470411009}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fd9c9b712253f541b260c62289fd1e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

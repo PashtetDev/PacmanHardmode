@@ -2,6 +2,8 @@ using UnityEngine;
 
 public abstract class EnemyBasic : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject particle;
     public GameObject weaponHand;
     [SerializeField]
     private int hp;
@@ -16,6 +18,7 @@ public abstract class EnemyBasic : MonoBehaviour
 
     public void Death()
     {
+        Instantiate(particle, transform.position, Quaternion.identity).GetComponent<ParticleController>().Initialize();
         PlayerController.instance.AddPoints();
         MapGenerator.instance.DeleteEnemy(gameObject);
         Destroy(gameObject);

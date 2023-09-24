@@ -12,9 +12,18 @@ public class Weapon : MonoBehaviour
     private WeaponSample myWeapon;
     [SerializeField]
     private GameObject bullet;
+    private Vector3 startPosition;
+
+
+    private void OnEnable()
+    {
+        transform.localPosition = startPosition;
+        StartCoroutine(Reload());
+    }
 
     private void Awake()
     {
+        startPosition = transform.localPosition;
         myWeapon.currentReloadTime = 0;
     }
 
@@ -41,7 +50,6 @@ public class Weapon : MonoBehaviour
 
     private IEnumerator Output(float magnitude)
     {
-        Vector3 startPosition = transform.localPosition;
         Vector3 startRotation = transform.localEulerAngles;
         transform.localPosition = startPosition + new Vector3(Random.Range(-magnitude, 0), 0, 0);
         if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x > transform.position.x)

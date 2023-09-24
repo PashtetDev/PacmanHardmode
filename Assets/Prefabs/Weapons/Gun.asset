@@ -12,10 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4137df26fd1e74da3e11a31e39c429, type: 3}
   m_Name: Gun
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
-  reloadTime: 0.6
-  currentReloadTime: 0
+  reloadTime: 0.8
+  currentReloadTime: 0.5940328
   isAuto: 1
   bullet: {fileID: 6057861698261505712, guid: c858b7e38a98e9e47aaf4df699bd7be8, type: 3}
-  count: 1
-  waitTime: 0.05

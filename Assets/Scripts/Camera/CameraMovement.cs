@@ -9,10 +9,13 @@ public class CameraMovement : MonoBehaviour
 
     private void Update()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        position = (mousePosition - PlayerController.instance.transform.position) / 2;
-        position.z = -10;
-        transform.localPosition = -(transform.localPosition - position).normalized * 5;
+        if (!PlayerController.instance.isLose)
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            position = (mousePosition - PlayerController.instance.transform.position) / 2;
+            position.z = -10;
+            transform.localPosition = -(transform.localPosition - position).normalized * 5;
+        }
     }
 
 }
