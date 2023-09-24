@@ -1144,6 +1144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db2a98041f59c024d80863d73fc54ec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sound: {fileID: 6715874160328053983, guid: 5dd4243068476d846921690641ffef17, type: 3}
   centerPosition: {fileID: 917613663}
   morePickUps:
   - {fileID: 1905905978938399265, guid: 80a77245b176e2045b8eb5423c598ecb, type: 3}

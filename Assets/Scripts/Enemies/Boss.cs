@@ -44,12 +44,12 @@ public class Boss : MonoBehaviour
 
     private void Death()
     {
+        Destroy(GetComponent<Collider2D>());
         isLose = true;
         PlayerController.instance.AddPoints();
         PlayerController.instance.AddPoints();
         PlayerController.instance.AddPoints();
         PlayerController.instance.AddPoints();
-        StartCoroutine();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

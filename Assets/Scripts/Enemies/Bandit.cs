@@ -106,7 +106,7 @@ public class Bandit : EnemyBasic
     {
         if (playerFollower)
         {
-            if (Vector2.Distance(transform.position, PlayerController.instance.transform.position) > 5f)
+            if (Vector2.Distance(transform.position, PlayerController.instance.transform.position) > 5)
             {
                 rb.velocity = (PlayerController.instance.transform.position - transform.position).normalized * speed;
             }

@@ -22,6 +22,11 @@ public class LoadScene : MonoBehaviour
         boss = true;
     }
 
+    public void Exit()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
     public void Load()
     {
         if (upgrade || boss)

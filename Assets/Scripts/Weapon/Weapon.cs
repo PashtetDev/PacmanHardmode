@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 public class Weapon : MonoBehaviour
 {
     [SerializeField]
+    private GameObject shot;
+    [SerializeField]
     private Transform dulo;
     [SerializeField]
     private WeaponSample myWeapon;
@@ -18,6 +20,7 @@ public class Weapon : MonoBehaviour
 
     private void Shot()
     {
+        Instantiate(shot).GetComponent<Sound>().Initialize();
         Vector3 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float rotateAngle = transform.parent.localEulerAngles.z;
         myWeapon.currentReloadTime = myWeapon.reloadTime;

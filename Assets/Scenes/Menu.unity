@@ -384,6 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b0bd2d8f328f640ae04b438f9a42b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  music: {fileID: 6715874160328053983, guid: ebbb7db586e03a84ebd30e23988601d4, type: 3}
   counter: {fileID: 1451833771}
 --- !u!1 &719710682
 GameObject:
@@ -1238,6 +1239,7 @@ GameObject:
   - component: {fileID: 1686283811}
   - component: {fileID: 1686283810}
   - component: {fileID: 1686283809}
+  - component: {fileID: 1686283812}
   m_Layer: 5
   m_Name: Header (3)
   m_TagString: Untagged
@@ -1363,6 +1365,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1686283807}
   m_CullTransparentMesh: 1
+--- !u!114 &1686283812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686283807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ac2ec198d0292449363fbf90716ae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 6715874160328053983, guid: 13f8e53bc5f24924990b357ee2efab0a, type: 3}
 --- !u!1 &1721678246
 GameObject:
   m_ObjectHideFlags: 0

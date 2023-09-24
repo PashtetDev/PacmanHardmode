@@ -20,6 +20,10 @@ public class Boosts
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
+    private TabletControler tablet;
+    [SerializeField]
+    private GameObject eatingSound, bigPoint, gameBoySound, loseSound, backGroundMusic;
+    [SerializeField]
     private GameObject cursorTexture;
     [SerializeField]
     private GameObject losePanel, backGround;
@@ -40,10 +44,10 @@ public class PlayerController : MonoBehaviour
 
     public void Initialize()
     {
+        Instantiate(backGroundMusic).GetComponent<BackGroundMusic>().Initialize();
         backGround.SetActive(false);
         losePanel.SetActive(false);
         myBoosts = new Boosts();
-        myBoosts.gunBullet = 100;
         isLose = false;
         SetInstance();
         rb = GetComponent<Rigidbody2D>();
@@ -51,6 +55,7 @@ public class PlayerController : MonoBehaviour
         cameraShaker.Initialize();
         counter.Initialize();
         BulletCheck();
+        tablet.Inititialize();
     }
 
     public void BulletCheck()
@@ -75,7 +80,10 @@ public class PlayerController : MonoBehaviour
         else
         {
             cursorTexture.SetActive(true);
-            transform.position = new Vector3(0, 0, 0);
+            if (SceneManager.GetActiveScene().name == "Boss")
+                transform.position = new Vector3(-15, 2, 0);
+            else
+                transform.position = new Vector3(0, 0, 0);
             cameraShaker.transform.GetChild(0).gameObject.SetActive(true);
             BulletCheck();
         }
@@ -92,6 +100,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            LoadScene.instance.Exit();
+        }
         if (myBoosts.powerUp >= 100)
         {
             myBoosts.powerUp = 0;
@@ -144,8 +156,9 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Eating()
     {
+        Instantiate(eatingSound).GetComponent<Sound>().Initialize();
         myBoosts.eating = true;
-        float eatingTime = 5;
+        float eatingTime = 6;
         while (eatingTime > 0)
         {
             eatingTime -= Time.deltaTime;
@@ -161,12 +174,16 @@ public class PlayerController : MonoBehaviour
 
     public void Death()
     {
-        if (PlayerPrefs.GetInt("TheBest") < myBoosts.points)
-            PlayerPrefs.SetInt("TheBest", myBoosts.points);
-        backGround.SetActive(true);
-        losePanel.SetActive(true);
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        isLose = true;
+        if (!isLose)
+        {
+            isLose = true;
+            Instantiate(loseSound).GetComponent<Sound>().Initialize();
+            if (PlayerPrefs.GetInt("TheBest") < myBoosts.points)
+                PlayerPrefs.SetInt("TheBest", myBoosts.points);
+            backGround.SetActive(true);
+            losePanel.SetActive(true);
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -176,10 +193,12 @@ public class PlayerController : MonoBehaviour
             Destroy(collision.gameObject);
             myBoosts.points++;
             PointCounter.instance.UpdateText(myBoosts.points);
+            tablet.Update_();
             myBoosts.powerUp++;
         }
         if (collision.CompareTag("BigPoint"))
         {
+            Instantiate(bigPoint).GetComponent<Sound>().Initialize();
             StopAllCoroutines();
             Destroy(collision.gameObject);
             StartCoroutine(Eating());
@@ -190,10 +209,11 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.CompareTag("1up"))
         {
+            Instantiate(gameBoySound).GetComponent<Sound>().Initialize();
             LoadScene.instance.LoadUpgrade();
             Destroy(collision.gameObject);
         }
-        if (collision.CompareTag("Fire") )
+        if (collision.CompareTag("Fire"))
         {
             Death();
         }

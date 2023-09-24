@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class Roulette : MonoBehaviour
 {
     [SerializeField]
+    private GameObject sound;
+    [SerializeField]
     private Transform centerPosition;
     [SerializeField]
     private List<GameObject> morePickUps;
@@ -34,6 +36,7 @@ public class Roulette : MonoBehaviour
 
     public void Initialize()
     {
+        Instantiate(sound).GetComponent<Sound>().Initialize();
         lenta.transform.position = lentaStartVector;
         button.SetActive(false);
         play = true;
@@ -100,8 +103,8 @@ public class Roulette : MonoBehaviour
                 PlayerController.instance.myBoosts.enemyBullet += 10;
                 break;
             case PickUp.Type.gameboy:
-                Initialize();
                 button.SetActive(true);
+                lenta.transform.position = lentaStartVector;
                 play = false;
                 StopAllCoroutines();
                 break;

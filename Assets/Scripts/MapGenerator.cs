@@ -195,7 +195,7 @@ public class MapGenerator : MonoBehaviour
         while (enemies.Count != 4)
         {
             Vector2Int place = RandomCell();
-            if (Vector2Int.Distance(place, Vector2Int.zero) > 10)
+            if (Vector2Int.Distance(place, Vector2Int.zero) > 15)
             {
                 enemies.Add(Instantiate(enemy[enemies.Count], (Vector2)place, Quaternion.identity));
                 subjects.Add(place);
@@ -242,18 +242,18 @@ public class MapGenerator : MonoBehaviour
 
         GameObject myPlayer = PlayerCreate();
 
-        int count = 0;
-        while (count != 5)
-        {
-            int radius = Random.Range(3, 9);
-            Vector2Int currentCell = RandomCell();
-            if (Vector2.Distance(currentCell, myPlayer.transform.position) > 10 + radius)
-            {
-                CreateIsland(radius, currentCell);
-                count++;
-            }
+        //int count = 0;
+        //while (count != 5)
+        //{
+        //    int radius = Random.Range(3, 9);
+        //    Vector2Int currentCell = RandomCell();
+        //    if (Vector2.Distance(currentCell, myPlayer.transform.position) > 10 + radius)
+        //    {
+        //        CreateIsland(radius, currentCell);
+        //        count++;
+        //    }
 
-        }
+        //}
     }
 
     private void MapDrawer()
@@ -335,7 +335,7 @@ public class MapGenerator : MonoBehaviour
     private IEnumerator Wait(Vector2 position)
     {
         yield return new WaitForSeconds(1);
-        if (!PlayerController.instance.myBoosts.boss)
+        if (!PlayerController.instance.myBoosts.boss && PlayerController.instance.myBoosts.points < 1000)
             Instantiate(portal, position, Quaternion.identity);
         else
             Instantiate(pipe, position, Quaternion.identity);
