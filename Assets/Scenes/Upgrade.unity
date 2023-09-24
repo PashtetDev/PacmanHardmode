@@ -991,12 +991,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1152,6 +1152,7 @@ MonoBehaviour:
   - {fileID: 4373290240170456686, guid: e097e153fb1fc514399968f623f4715b, type: 3}
   - {fileID: 440014790213066486, guid: e0c10a33b12a6a5418eb67d5897a48ff, type: 3}
   - {fileID: 6422599502209920723, guid: 11237418b124eb64f8d42e0f5d665a1b, type: 3}
+  - {fileID: 6878224701080542558, guid: 6a5c0def826ab3e438a076da2f8297d3, type: 3}
   - {fileID: 6878224701080542558, guid: 6a5c0def826ab3e438a076da2f8297d3, type: 3}
   pipe: {fileID: 4966738578041724613, guid: 0535467d4aaac0a44977adef7426f905, type: 3}
   mashroom: {fileID: 5288255972552012259, guid: 956989040e646be4285746c2b5a0b806, type: 3}

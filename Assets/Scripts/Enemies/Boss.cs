@@ -6,6 +6,8 @@ public class Boss : MonoBehaviour
     [SerializeField]
     private GameObject win;
     [SerializeField]
+    private GameObject winSound;
+    [SerializeField]
     private TextGenerator generator;
     [SerializeField]
     private GameObject sprite;
@@ -61,6 +63,8 @@ public class Boss : MonoBehaviour
         {
             if (!isLose)
             {
+                PlayerController.instance.win = true;
+                Instantiate(winSound).GetComponent<Sound>().Initialize();
                 win.SetActive(true);
                 generator.Initialize();
                 isLose = true;

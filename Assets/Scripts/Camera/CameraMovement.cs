@@ -9,7 +9,7 @@ public class CameraMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!PlayerController.instance.isLose)
+        if (!PlayerController.instance.isLose && !PlayerController.instance.win)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             position = (mousePosition - PlayerController.instance.transform.position) / 2;

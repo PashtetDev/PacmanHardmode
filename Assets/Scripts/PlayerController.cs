@@ -41,11 +41,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 direction;
     public float speed;
     private Rigidbody2D rb;
-    public bool isLose;
+    public bool isLose, win;
     public Boosts myBoosts;
 
     public void Initialize()
     {
+        win = false;
         Instantiate(backGroundMusic).GetComponent<BackGroundMusic>().Initialize();
         backGround.SetActive(false);
         losePanel.SetActive(false);
@@ -85,7 +86,10 @@ public class PlayerController : MonoBehaviour
             if (SceneManager.GetActiveScene().name == "Boss")
                 transform.position = new Vector3(-15, 2, 0);
             else
+            {
                 transform.position = new Vector3(0, 0, 0);
+                myBoosts.eating = false;
+            }
             cameraShaker.transform.GetChild(0).gameObject.SetActive(true);
             BulletCheck();
         }
@@ -112,7 +116,7 @@ public class PlayerController : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(Eating());
         }
-        if (!isLose)
+        if (!isLose && !win)
         {
             direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
             rb.velocity = direction * speed;
@@ -193,45 +197,49 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Point"))
+        if (!win)
         {
-            Destroy(collision.gameObject);
-            myBoosts.points++;
-            PointCounter.instance.UpdateText(myBoosts.points);
-            tablet.Update_();
-            myBoosts.powerUp++;
-        }
-        if (collision.CompareTag("BigPoint"))
-        {
-            Instantiate(bigPoint).GetComponent<Sound>().Initialize();
-            StopAllCoroutines();
-            Destroy(collision.gameObject);
-            StartCoroutine(Eating());
-        }
-        if (collision.CompareTag("Portal"))
-        {
-            LoadScene.instance.Load();
-        }
-        if (collision.CompareTag("1up"))
-        {
-            Instantiate(gameBoySound).GetComponent<Sound>().Initialize();
-            LoadScene.instance.LoadUpgrade();
-            Destroy(collision.gameObject);
-        }
-        if (collision.CompareTag("Fire"))
-        {
-            Death();
-        }
-        if (collision.CompareTag("Pipe"))
-        {
-            LoadScene.instance.LoadBoss();
-            LoadScene.instance.Load();
-        }
-        if (collision.CompareTag("Gun"))
-        {
-            myBoosts.gunBullet += 3;
-            Destroy(collision.gameObject);
-            BulletCheck();
+
+            if (collision.CompareTag("Point"))
+            {
+                Destroy(collision.gameObject);
+                myBoosts.points++;
+                PointCounter.instance.UpdateText(myBoosts.points);
+                tablet.Update_();
+                myBoosts.powerUp++;
+            }
+            if (collision.CompareTag("BigPoint"))
+            {
+                Instantiate(bigPoint).GetComponent<Sound>().Initialize();
+                StopAllCoroutines();
+                Destroy(collision.gameObject);
+                StartCoroutine(Eating());
+            }
+            if (collision.CompareTag("Portal"))
+            {
+                LoadScene.instance.Load();
+            }
+            if (collision.CompareTag("1up"))
+            {
+                Instantiate(gameBoySound).GetComponent<Sound>().Initialize();
+                LoadScene.instance.LoadUpgrade();
+                Destroy(collision.gameObject);
+            }
+            if (collision.CompareTag("Fire"))
+            {
+                Death();
+            }
+            if (collision.CompareTag("Pipe"))
+            {
+                LoadScene.instance.LoadBoss();
+                LoadScene.instance.Load();
+            }
+            if (collision.CompareTag("Gun"))
+            {
+                myBoosts.gunBullet += 3;
+                Destroy(collision.gameObject);
+                BulletCheck();
+            }
         }
     }
 

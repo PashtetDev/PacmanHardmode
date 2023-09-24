@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6715874160328053976}
   - component: {fileID: 6715874160328053977}
   m_Layer: 0
-  m_Name: Start
+  m_Name: Win
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b9d4f65593171f64587bf8b8655d61ce, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 85b2415073f835240b2a2fa7f164207f, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

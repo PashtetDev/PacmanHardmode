@@ -57,6 +57,7 @@ public class Roulette : MonoBehaviour
             speed -= maxSpeed / 5 * Time.deltaTime;
             yield return null;
         }
+        speed = 0;
         StartCoroutine(Winner());
     }
 
